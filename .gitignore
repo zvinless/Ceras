@@ -332,3 +332,7 @@ ASALocalRun/
 .localhistory/
 nuget.exe
 *.csproj.DotSettings
+
+# Cake
+tools/*
+!tools/packages.config

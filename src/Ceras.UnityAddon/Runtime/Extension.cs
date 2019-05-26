@@ -1,5 +1,7 @@
 using System;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Rikimaru0345.Ceras.Editor")]
+
 namespace Ceras
 {
 	using Formatters;
