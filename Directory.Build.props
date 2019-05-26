@@ -1,7 +1,0 @@
-<Project>
-  <!-- Global Settings -->
-  <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-  </PropertyGroup>
-</Project>

@@ -1,0 +1,11 @@
+{
+	"name": "com.rikimaru0345.ceras",
+	"version": "4.0.40",
+	"displayName": "Ceras",
+	"description": "Universal binary serializer for a wide variety of scenarios",
+	"unity": "2018.1",
+	"author": {
+		"name": "rikimaru0345",
+		"url": "https://github.com/rikimaru0345/Ceras"
+	}
+}

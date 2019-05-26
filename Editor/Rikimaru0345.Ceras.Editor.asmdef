@@ -1,0 +1,16 @@
+{
+    "name": "Rikimaru0345.Ceras.Editor",
+    "references": [
+        "Rikimaru0345.Ceras.Runtime"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
