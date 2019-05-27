@@ -1,3 +1,7 @@
+environment:
+  access_token:
+    secure: sIDYBBJs84pnppOvAtiNnYr4J9+ZOh0ucB6NFjp5fclSfzkXz2AugySO0VVVUrKZ
+
 branches:
   only:
   - packge-builder
@@ -35,14 +39,20 @@ build_script:
 
   - ps: .\build.ps1
   - 7z a ..\ceras_unity.zip "..\Ceras.UnityAddon\Release"
-  - ps: git checkout -qb package-manager-package
-  - ps: Remove-Item .\* -Recurse
-  - ps: Copy-Item "..\Ceras.UnityAddon\Release\*" -Destination ".\" -Recurse
-  - ps: git add --all
-  - ps: git commit -m "Update Unity package"
-  - ps: git push
 
 test: "off"
+
+on_success:
+  - git config --global credential.helper store
+  - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - git config --global user.email "appveyor@noreply.com"
+  - git config --global user.name "Appveyor"
+  - git checkout -qb package-manager-package
+  - ps: Remove-Item .\* -Recurse
+  - ps: Copy-Item "..\Ceras.UnityAddon\Release\*" -Destination ".\" -Recurse
+  - git add --all
+  - git commit -m "Update Unity package"
+  - git push
 
 artifacts:
 
