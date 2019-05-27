@@ -14,6 +14,9 @@ dotnet_csproj:
 nuget:
   disable_publish_on_pr: true
 
+init:
+  - git config --global core.autocrlf false
+
 clone_folder: C:\projects\ceras
 
 before_build:
@@ -35,7 +38,7 @@ build_script:
   - ps: git checkout -qb package-manager-package
   - ps: Remove-Item .\* -Recurse
   - ps: Copy-Item "..\Ceras.UnityAddon\Release\*" -Destination ".\" -Recurse
-  - ps: git add --all
+  - ps: git add -q --all
   - ps: git commit -m "Update Unity package"
   - ps: git push
 
