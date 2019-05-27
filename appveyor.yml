@@ -74,7 +74,5 @@ artifacts:
 #- path: ceras_UnityAotGenerator.zip
 #  name: AotGenerator for Unity IL2CPP
 
-- path: ..\ceras_unity.zip
+- path: ceras_unity.zip
   name: Release Folder Zip (Unity)
-
-
