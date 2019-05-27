@@ -1,4 +1,3 @@
-#addin "nuget:?package=Cake.Compression&version=0.2.3"
 #addin "nuget:?package=YamlDotNet&version=6.0.0"
 
 using YamlDotNet.RepresentationModel;
@@ -6,7 +5,9 @@ using YamlDotNet.Serialization;
 using Path = Cake.Core.IO.Path;
 
 var av = AppVeyor.IsRunningOnAppVeyor;
-var createUnityPackage = Argument("target", "Ceras.UnityAddon");
+var target = Argument("target", "All");
+var releaseSubPath = $"bin/{(av ? "Any CPU/" : "")}Release";
+
 var dotNetBuildConfig = new DotNetCoreBuildSettings {
 	Verbosity = DotNetCoreVerbosity.Minimal,
 	Configuration = "Release"
@@ -37,25 +38,30 @@ void GenerateMetaFiles(ISerializer serializer, string templatePath, IEnumerable<
 	}
 }
 
-// Task("Ceras")
-// 	.Does(() => DotNetCoreBuild("src/Ceras/Ceras.csproj", dotNetBuildConfig));
+Task("Clean")
+	.Does(() => {
+		DeleteFiles("./*.zip");
+		DotNetCoreClean(".", new DotNetCoreCleanSettings { Configuration = "Release" });
+	});
 
-// Task("Compress")
-// 	.Does(() => {
-// 		Zip("src/Ceras/bin/Any CPU/Release/netstandard2.0", "ceras_netstandard2.0.zip");
-// 	});
-// Task("Ceras.ImmutableCollections")
-// 	.IsDependentOn("Ceras")
-// 	.Does(() => DotNetCoreBuild("src/Ceras.ImmutableCollections/Ceras.ImmutableCollections.csproj", dotNetBuildConfig));
-// Task("Ceras.Test")
-// 	.IsDependentOn("Ceras")
-// 	.Does(() => DotNetCoreBuild("src/Ceras.Test/Ceras.Test.csproj", dotNetBuildConfig));
-// Task("Ceras.AotGenerator")
-// 	.IsDependentOn("Ceras")
-// 	.Does(() => DotNetCoreBuild("src/Ceras.AotGenerator/Ceras.AotGenerator.csproj", dotNetBuildConfig));
-// Task("Ceras.AotGeneratorApp")
-// 	.IsDependentOn("Ceras.AotGenerator")
-// 	.Does(() => DotNetCoreBuild("src/Ceras.AotGeneratorApp/Ceras.AotGeneratorApp.csproj", dotNetBuildConfig));
+Task("Ceras")
+	.Does(() => DotNetCoreBuild("src/Ceras/Ceras.csproj", dotNetBuildConfig));
+Task("Ceras.ImmutableCollections")
+	.Does(() => DotNetCoreBuild("src/Ceras.ImmutableCollections/Ceras.ImmutableCollections.csproj", dotNetBuildConfig));
+Task("Ceras.Test")
+	.Does(() => DotNetCoreBuild("tests/Ceras.Test/Ceras.Test.csproj", dotNetBuildConfig));
+Task("Ceras.AotGenerator")
+	.Does(() => DotNetCoreBuild("src/Ceras.AotGenerator/Ceras.AotGenerator.csproj", dotNetBuildConfig));
+Task("Ceras.AotGeneratorApp")
+	.Does(() => DotNetCoreBuild("src/Ceras.AotGeneratorApp/Ceras.AotGeneratorApp.csproj", dotNetBuildConfig));
+
+Task("Compress")
+	.IsDependentOn("Ceras")
+	.Does(() => {
+		Zip($"src/Ceras/{releaseSubPath}/netstandard2.0", "ceras_netstandard2.0.zip");
+		Zip($"src/Ceras/{releaseSubPath}/net45", "ceras_net45.zip");
+		Zip($"src/Ceras/{releaseSubPath}/net47", "ceras_net47.zip");
+	});
 
 // Put this outside of the repository on AppVeyor
 // We'll copy it over after switching branches
@@ -64,10 +70,9 @@ var runtimeDir = packageDir + Directory("Runtime");
 var editorDir = packageDir + Directory("Editor");
 
 Task("Ceras.UnityAddon")
+	.IsDependentOn("Ceras")
 	.Does(() => {
 		// Collect runtime dependencies
-		// Technically this isn't necessary since net47 happens to have the same dependencies,
-		// but this shouldn't take very long
 		DotNetCorePublish("src/Ceras/Ceras.csproj", new DotNetCorePublishSettings {
 			Framework = "netstandard2.0",
 			Configuration = "Release"
@@ -81,7 +86,7 @@ Task("Ceras.UnityAddon")
 
 		// Runtime
 		EnsureDirectoryExists(runtimeDir);
-		CopyFiles($"src/Ceras/bin/{(av ? "Any CPU/" : "")}Release/netstandard2.0/publish/System.*.dll", runtimeDir);
+		CopyFiles($"src/Ceras/{releaseSubPath}/netstandard2.0/publish/System.*.dll", runtimeDir);
 		CopyFiles("src/Ceras/**/*.cs", runtimeDir, true);
 		DeleteDirectoryIfExists(runtimeDir, "obj");
 		CopyDirectory("src/Ceras.UnityAddon/Runtime", runtimeDir);
@@ -116,4 +121,14 @@ Task("Ceras.UnityAddon")
 		}
 	});
 
-RunTarget(createUnityPackage);
+Task("All")
+	.IsDependentOn("Clean")
+	.IsDependentOn("Ceras")
+	.IsDependentOn("Ceras.ImmutableCollections")
+	.IsDependentOn("Ceras.Test")
+	.IsDependentOn("Ceras.AotGenerator")
+	.IsDependentOn("Ceras.AotGeneratorApp")
+	.IsDependentOn("Compress")
+	.IsDependentOn("Ceras.UnityAddon");
+
+RunTarget(target);
