@@ -20,10 +20,11 @@ before_build:
 - cmd: nuget restore
 
 build_script:
-  - dotnet build "C:\projects\ceras\src\Ceras\Ceras.csproj" --verbosity m --configuration Release
-  - dotnet build "C:\projects\ceras\src\Ceras.ImmutableCollections\Ceras.ImmutableCollections.csproj" --verbosity m --configuration Release
-  - dotnet build "C:\projects\ceras\tests\Ceras.Test\Ceras.Test.csproj" --verbosity m --configuration Release
+  # - dotnet build "C:\projects\ceras\src\Ceras\Ceras.csproj" --verbosity m --configuration Release
+  # - dotnet build "C:\projects\ceras\src\Ceras.ImmutableCollections\Ceras.ImmutableCollections.csproj" --verbosity m --configuration Release
+  # - dotnet build "C:\projects\ceras\tests\Ceras.Test\Ceras.Test.csproj" --verbosity m --configuration Release
 #  - dotnet build "C:\projects\ceras\src\Ceras.AotGenerator\Ceras.AotGenerator.csproj" --verbosity m --configuration Release
+  - ps: .\build.ps1
 
   - 7z a C:\projects\ceras\ceras_netstandard2.0.zip "C:\projects\ceras\src\Ceras\bin\Any CPU\Release\netstandard2.0\*"
   - 7z a C:\projects\ceras\ceras_net45.zip "C:\projects\ceras\src\Ceras\bin\Any CPU\Release\net45\*"
