@@ -38,7 +38,7 @@ build_script:
 #  - 7z a C:\projects\ceras\ceras_UnityAotGenerator.zip "C:\projects\ceras\src\Ceras.AotGenerator\bin\Any CPU\Release\net47\*"
 
   - ps: .\build.ps1
-  - 7z a ..\ceras_unity.zip "..\Ceras.UnityAddon\Release"
+  - 7z a .\ceras_unity.zip "..\Ceras.UnityAddon\Release"
 
 test: "off"
 
