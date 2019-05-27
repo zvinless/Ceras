@@ -1,5 +1,5 @@
-fileFormatVersion: 2
-guid: e08d04cdfa3c0004983d79952a40d51a
+fileFormatVersion: 3
+guid: 390d418551a847809f8136fb04944828
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -7,12 +7,12 @@ PluginImporter:
   executionOrder: {}
   defineConstraints: []
   isPreloaded: 0
-  isOverridable: 1
+  isOverridable: 0
   isExplicitlyReferenced: 0
   validateReferences: 1
   platformData:
   - first:
-      Any: 
+      Any: ''
     second:
       enabled: 1
       settings: {}
@@ -28,6 +28,6 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: AnyCPU
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData: ''
+  assetBundleName: ''
+  assetBundleVariant: ''

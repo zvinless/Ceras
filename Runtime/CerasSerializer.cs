@@ -3,7 +3,6 @@
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Ceras.Test")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Ceras.AotGenerator")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Ceras.TestDebugger")]
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Rikimaru0345.Ceras.Editor")]
 namespace Ceras
 {
 	using Exceptions;
@@ -20,15 +19,15 @@ namespace Ceras
 
 	/*
 	 * Todo:
-	 *
+	 * 
 	 * VersionTolerance:
 	 * - It would be nice if we could embed a hash + size offset into the binary, so that we can easily detect that we already have a given schema, and then skip it (using the one we already have)
-	 *
+	 * 
 	 * Robustness:
 	 * - ProtocolChecksum should include every setting of the config as well.
 	 *   So all the bool and enum settings also contribute to the checksum so it is more reliable.
 	 *   Unfortunately we can't capture all the user provided stuff like callbacks, type binder, ...
-	 *
+	 *  
 	 * - GenerateChecksum should be automatic when KnownTypes contains types and AutoSeal is active
 	 *
 	 */
@@ -457,7 +456,7 @@ namespace Ceras
 
 		/// <summary>
 		/// Convenience method that will most likely allocate a T to return (using 'new T()'). Unless the data says the object really is null, in that case no instance of T is allocated.
-		/// It would be smart to not use this method and instead use another overload.
+		/// It would be smart to not use this method and instead use another overload. 
 		/// That way the deserializer will set/populate the object you've provided. Obviously this only works if you can overwrite/reuse objects like this! (which, depending on what you're doing, might not be possible at all)
 		/// <para>Ceras is not thread-safe</para>
 		/// </summary>
@@ -527,7 +526,7 @@ namespace Ceras
 					}
 				}
 
-				// todo: use a custom 'Bag' collection or so for deserialization caches, so we can quickly remove everything above a certain index
+				// todo: use a custom 'Bag' collection or so for deserialization caches, so we can quickly remove everything above a certain index 
 
 				// Clearing and re-adding the known types is really bad...
 				// But how would we optimize it best?
@@ -643,7 +642,7 @@ namespace Ceras
 			meta.SpecificFormatter = f;
 			((DynamicFormatter)f).Initialize();
 
-			/* (ref buffer, ref offset) =>
+			/* (ref buffer, ref offset) => 
 			 * {
 			 *    f.Serialize(ref buffer, ref offset, null);
 			 * }
