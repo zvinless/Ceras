@@ -5,6 +5,7 @@ using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using Path = Cake.Core.IO.Path;
 
+var av = AppVeyor.IsRunningOnAppVeyor;
 var createUnityPackage = Argument("target", "Ceras.UnityAddon");
 var dotNetBuildConfig = new DotNetCoreBuildSettings {
 	Verbosity = DotNetCoreVerbosity.Minimal,
@@ -78,7 +79,7 @@ Task("Ceras.UnityAddon")
 
 		// Runtime
 		EnsureDirectoryExists(runtimeDir);
-		CopyFiles("src/Ceras/bin/Release/netstandard2.0/publish/System.*.dll", runtimeDir);
+		CopyFiles($"src/Ceras/bin/{(av ? "Any CPU/" : "")}Release/netstandard2.0/publish/System.*.dll", runtimeDir);
 		CopyFiles("src/Ceras/**/*.cs", runtimeDir, true);
 		DeleteDirectoryIfExists(runtimeDir, "obj");
 		CopyDirectory("src/Ceras.UnityAddon/Runtime", runtimeDir);

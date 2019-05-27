@@ -31,6 +31,7 @@ build_script:
 #  - 7z a C:\projects\ceras\ceras_UnityAotGenerator.zip "C:\projects\ceras\src\Ceras.AotGenerator\bin\Any CPU\Release\net47\*"
 
   - ps: .\build.ps1
+  - 7z a .\ceras_unity.zip ".\src\Ceras.UnityAddon\Release"
 
 test: "off"
 
@@ -54,5 +55,7 @@ artifacts:
 #- path: ceras_UnityAotGenerator.zip
 #  name: AotGenerator for Unity IL2CPP
 
+- path: ceras_unity.zip
+  name: Release Folder Zip (Unity)
 
 
