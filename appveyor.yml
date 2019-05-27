@@ -1,6 +1,6 @@
 branches:
   only:
-  - master
+  - packge-builder
 
 image: Visual Studio 2017
 configuration: Release
