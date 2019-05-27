@@ -47,7 +47,7 @@ on_success:
   - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
   - git config --global user.email "appveyor@noreply.com"
   - git config --global user.name "Appveyor"
-  - git checkout -qb package-manager-package
+  - git checkout -q --track origin/package-manager-package
   - ps: Remove-Item .\* -Recurse
   - ps: Copy-Item "..\Ceras.UnityAddon\Release\*" -Destination ".\" -Recurse
   - git add --all
@@ -74,7 +74,7 @@ artifacts:
 #- path: ceras_UnityAotGenerator.zip
 #  name: AotGenerator for Unity IL2CPP
 
-- path: ceras_unity.zip
+- path: ..\ceras_unity.zip
   name: Release Folder Zip (Unity)
 
 
