@@ -38,7 +38,7 @@ build_script:
   - ps: git checkout -qb package-manager-package
   - ps: Remove-Item .\* -Recurse
   - ps: Copy-Item "..\Ceras.UnityAddon\Release\*" -Destination ".\" -Recurse
-  - ps: git add -q --all
+  - ps: git add --all
   - ps: git commit -m "Update Unity package"
   - ps: git push
 
