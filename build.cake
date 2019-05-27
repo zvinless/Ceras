@@ -1,3 +1,4 @@
+#addin "nuget:?package=Cake.Compression&version=0.2.3"
 #addin "nuget:?package=YamlDotNet&version=6.0.0"
 
 using YamlDotNet.RepresentationModel;
@@ -35,20 +36,25 @@ void GenerateMetaFiles(ISerializer serializer, string templatePath, IEnumerable<
 	}
 }
 
-Task("Ceras")
-	.Does(() => DotNetCoreBuild("src/Ceras/Ceras.csproj", dotNetBuildConfig));
-Task("Ceras.ImmutableCollections")
-	.IsDependentOn("Ceras")
-	.Does(() => DotNetCoreBuild("src/Ceras.ImmutableCollections/Ceras.ImmutableCollections.csproj", dotNetBuildConfig));
-Task("Ceras.Test")
-	.IsDependentOn("Ceras")
-	.Does(() => DotNetCoreBuild("src/Ceras.Test/Ceras.Test.csproj", dotNetBuildConfig));
-Task("Ceras.AotGenerator")
-	.IsDependentOn("Ceras")
-	.Does(() => DotNetCoreBuild("src/Ceras.AotGenerator/Ceras.AotGenerator.csproj", dotNetBuildConfig));
-Task("Ceras.AotGeneratorApp")
-	.IsDependentOn("Ceras.AotGenerator")
-	.Does(() => DotNetCoreBuild("src/Ceras.AotGeneratorApp/Ceras.AotGeneratorApp.csproj", dotNetBuildConfig));
+// Task("Ceras")
+// 	.Does(() => DotNetCoreBuild("src/Ceras/Ceras.csproj", dotNetBuildConfig));
+
+// Task("Compress")
+// 	.Does(() => {
+// 		Zip("src/Ceras/bin/Any CPU/Release/netstandard2.0", "ceras_netstandard2.0.zip");
+// 	});
+// Task("Ceras.ImmutableCollections")
+// 	.IsDependentOn("Ceras")
+// 	.Does(() => DotNetCoreBuild("src/Ceras.ImmutableCollections/Ceras.ImmutableCollections.csproj", dotNetBuildConfig));
+// Task("Ceras.Test")
+// 	.IsDependentOn("Ceras")
+// 	.Does(() => DotNetCoreBuild("src/Ceras.Test/Ceras.Test.csproj", dotNetBuildConfig));
+// Task("Ceras.AotGenerator")
+// 	.IsDependentOn("Ceras")
+// 	.Does(() => DotNetCoreBuild("src/Ceras.AotGenerator/Ceras.AotGenerator.csproj", dotNetBuildConfig));
+// Task("Ceras.AotGeneratorApp")
+// 	.IsDependentOn("Ceras.AotGenerator")
+// 	.Does(() => DotNetCoreBuild("src/Ceras.AotGeneratorApp/Ceras.AotGeneratorApp.csproj", dotNetBuildConfig));
 
 var packageDir = Directory("src/Ceras.UnityAddon/Release");
 var runtimeDir = packageDir + Directory("Runtime");
