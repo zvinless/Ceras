@@ -31,7 +31,13 @@ build_script:
 #  - 7z a C:\projects\ceras\ceras_UnityAotGenerator.zip "C:\projects\ceras\src\Ceras.AotGenerator\bin\Any CPU\Release\net47\*"
 
   - ps: .\build.ps1
-  - 7z a .\ceras_unity.zip ".\src\Ceras.UnityAddon\Release"
+  - 7z a ..\ceras_unity.zip "..\Ceras.UnityAddon\Release"
+  - ps: git checkout -b package-manager-package
+  - ps: Remove-Item .\* -Recurse
+  - ps: Copy-Item "..\Ceras.UnityAddon\Release\*" -Destination ".\" -Recurse
+  - ps: git add --all
+  - ps: git commit -m "Update Unity package"
+  - ps: git push
 
 test: "off"
 

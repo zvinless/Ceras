@@ -57,7 +57,9 @@ void GenerateMetaFiles(ISerializer serializer, string templatePath, IEnumerable<
 // 	.IsDependentOn("Ceras.AotGenerator")
 // 	.Does(() => DotNetCoreBuild("src/Ceras.AotGeneratorApp/Ceras.AotGeneratorApp.csproj", dotNetBuildConfig));
 
-var packageDir = Directory("src/Ceras.UnityAddon/Release");
+// Put this outside of the repository on AppVeyor
+// We'll copy it over after switching branches
+var packageDir = Directory($"{(av ? ".." : "src")}/Ceras.UnityAddon/Release");
 var runtimeDir = packageDir + Directory("Runtime");
 var editorDir = packageDir + Directory("Editor");
 
